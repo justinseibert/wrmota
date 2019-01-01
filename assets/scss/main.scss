@@ -1,0 +1,9 @@
+@import '../esprcsso/src/main';
+
+// @import 'mobile/map';
+
+
+#__nuxt,
+#__layout {
+  @extend body;
+}

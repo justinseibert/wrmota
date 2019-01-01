@@ -13,7 +13,7 @@ export const actions = {
 
   // axios...
   async getServerData({ commit }) {
-    const { data } = await this.$axios.get(`${process.env.API}/get/all`)
+    const { data } = await this.$axios.get(`${process.env.API}/get/all/installed`)
     commit('setServerData', data)
   },
 
@@ -29,4 +29,39 @@ export const mutations = {
     state.data = data
   }
 
+}
+
+
+export const getters = {
+
+  mapFiltered: state => {
+
+    const colors = {
+      community: '#823B93',
+      culture: '#F89F34',
+      moving: '#FDD729',
+      music: '#89C54C',
+      school: '#00A09B',
+      nostalgia: '#DA519C',
+      water: '#009EE0',
+      uninstalled: '#CCC'
+    };
+
+    let data = state.data.codes.data;
+    let filtered = {};
+
+    for (let i in data){
+      if (data[i][0].artist_name){
+        let theme = data[i][0].theme
+        let installed = data[i][0].installed > 0;
+
+        data[i][0].original_theme = theme;
+        data[i][0].theme_color = installed ? colors[theme] : colors.uninstalled;
+
+        filtered[i] = data[i];
+      }
+    }
+
+    return filtered;
+  }
 }
