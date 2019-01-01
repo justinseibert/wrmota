@@ -5,7 +5,7 @@
   "author": "Justin Seibert",
   "private": true,
   "scripts": {
-    "dev": "nuxt",
+    "dev": "NODE_ENV=development nuxt -H 0.0.0.0",
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate"
@@ -14,10 +14,16 @@
     "@nuxtjs/axios": "^5.0.0",
     "cross-env": "^5.2.0",
     "dotenv": "^6.2.0",
+    "leaflet": "^1.4.0",
+    "lodash.debounce": "^4.0.8",
     "normalize.css": "^8.0.1",
-    "nuxt": "^2.0.0"
+    "nuxt": "^2.0.0",
+    "nuxt-spa-store-init": "^1.1.0"
   },
   "devDependencies": {
-    "nodemon": "^1.11.0"
+    "node-sass": "^4.11.0",
+    "nodemon": "^1.11.0",
+    "sass-loader": "^7.1.0",
+    "nuxt-sass-resources-loader": "^2.0.5"
   }
 }

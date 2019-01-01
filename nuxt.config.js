@@ -4,7 +4,7 @@ const path = require('path')
 require('dotenv').config({ path: path.join(__dirname, '.env') })
 
 module.exports = {
-  mode: 'universal',
+  mode: 'spa',
 
   /*
   ** Headers of the page
@@ -31,17 +31,18 @@ module.exports = {
   */
   css: [
     'normalize.css',
-    '~/assets/sass/main.scss'
+    '~/assets/scss/main.scss',
+    '~/node_modules/leaflet/dist/leaflet.css',
   ],
 
   /*
   ** Plugins to load before mounting the App
   */
-  plugins: [
-  ],
+  plugins: [],
 
   env: {
     API: process.env.API,
+    SERVER: process.env.SERVER,
   },
 
   /*
@@ -49,7 +50,8 @@ module.exports = {
   */
   modules: [
     // Doc: https://github.com/nuxt-community/axios-module#usage
-    '@nuxtjs/axios'
+    '@nuxtjs/axios',
+    'nuxt-spa-store-init'
   ],
   /*
   ** Axios module configuration
