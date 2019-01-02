@@ -14,6 +14,7 @@
     "@nuxtjs/axios": "^5.0.0",
     "cross-env": "^5.2.0",
     "dotenv": "^6.2.0",
+    "howler": "^2.1.1",
     "leaflet": "^1.4.0",
     "lodash.debounce": "^4.0.8",
     "normalize.css": "^8.0.1",

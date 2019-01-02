@@ -53,10 +53,11 @@ export const getters = {
     for (let i in data){
       if (data[i][0].artist_name){
         let theme = data[i][0].theme
-        let installed = data[i][0].installed > 0;
+        let color = data[i][0].installed > 0 ? colors[theme] : colors.uninstalled;
 
         data[i][0].original_theme = theme;
-        data[i][0].theme_color = installed ? colors[theme] : colors.uninstalled;
+        data[i][0].theme_color = color ;
+        data[i][0].theme_class = `theme-${theme}`;
 
         filtered[i] = data[i];
       }
