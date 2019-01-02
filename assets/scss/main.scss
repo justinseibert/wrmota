@@ -1,7 +1,12 @@
-@import '../esprcsso/src/main';
+@import '../esprcsso/variables';
+@import 'variables';
+@import '../esprcsso/main';
+
+@import 'colors';
+@import 'typography';
 
 // @import 'mobile/map';
-
+@import 'mobile/audio';
 
 #__nuxt,
 #__layout {

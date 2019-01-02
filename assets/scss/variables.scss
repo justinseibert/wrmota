@@ -1,0 +1,39 @@
+// COLORS
+
+$theme_colors: (
+  community: #823B93,
+  culture: #F89F34,
+  moving: #FDD729,
+  music: #89C54C,
+  school: #00A09B,
+  nostalgia: #DA519C,
+  water: #009EE0,
+  uninstalled: #CCC
+);
+
+$colors: map-merge(
+  $colors, $theme_colors
+);
+
+
+// TYPOGRAPHY
+
+$wrmota_fonts: (
+  header: (
+    family: ("Londrina Solid", sans-serif),
+    weight: 400,
+    style: normal
+  ),
+  subheader: (
+    family: ("Bitter", sans-serif),
+    weight: 700,
+    style: normal
+  ),
+  body: (
+    family: ("Bitter", sans-serif),
+    weight: 400,
+    style: normal
+  ),
+);
+
+$fonts: map-merge($fonts, $wrmota_fonts);

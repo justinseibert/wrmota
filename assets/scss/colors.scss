@@ -1,0 +1,21 @@
+@each $item,$color in $theme_colors {
+  .theme-#{$item} {
+    border-color: $color;
+    color: $color;
+    font-weight: 700;
+    text-transform: capitalize;
+    &.player-track {
+      background: $color;
+    }
+    &.player-button {
+      color: color(body);
+      background-color: $color;
+    }
+    & a {
+      color: $color;
+    }
+    svg {
+      fill: color(body);
+    }
+  }
+}

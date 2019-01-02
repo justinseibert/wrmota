@@ -1,0 +1,14 @@
+h2,
+h3,
+h4,
+h5,
+h6 {
+  @include -font(subheader);
+  margin-bottom: space(minimal);
+}
+
+h4,
+h5,
+h6 {
+  font-weight: 400;
+}

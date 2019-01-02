@@ -17,7 +17,8 @@ module.exports = {
       { hid: 'description', name: 'description', content: pkg.description }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      { rel: 'stylesheet', type: 'text/css', href: 'https://fonts.googleapis.com/css?family=Londrina+Solid:400|Bitter:400,700'}
     ]
   },
 
@@ -43,6 +44,7 @@ module.exports = {
   env: {
     API: process.env.API,
     SERVER: process.env.SERVER,
+    MEDIA: process.env.MEDIA,
   },
 
   /*
