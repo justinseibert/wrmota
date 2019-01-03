@@ -13,8 +13,8 @@ export const actions = {
 
   // axios...
   async getServerData({ commit }) {
-    const { data } = await this.$axios.get(`${process.env.API}/get/all/installed`)
-    commit('setServerData', data)
+    const { data } = await this.$axios.get(`${process.env.API}/get/readable`)
+    commit('setServerData', data.data)
   },
 
 }
@@ -64,5 +64,95 @@ export const getters = {
     }
 
     return filtered;
+  },
+
+  filtered: state => {
+    const colors = {
+      community: '#823B93',
+      culture: '#F89F34',
+      moving: '#FDD729',
+      music: '#89C54C',
+      school: '#00A09B',
+      nostalgia: '#DA519C',
+      water: '#009EE0',
+      uninstalled: '#CCC'
+    };
+
+    let data = state.data;
+
+    let filtered = data.map(d => {
+      return {
+        ...d,
+        ...{
+          theme_color: d.installed > 0 ? colors[d.theme] : colors.uninstalled,
+          theme_class: `theme-${d.theme}`,
+          audio: process.env.MEDIA + '/' + d.audio_directory + d.audio,
+          image1: d.image1_directory + d.image1 + d.image1_extension,
+          image2: d.image2_directory + d.image2 + d.image2_extension,
+          image3: d.image3_directory + d.image3 + d.image3_extension,
+          website: d.website ? 'http://' + d.website : false,
+        }
+      }
+    });
+
+    return filtered;
+  },
+
+  artistSort: (state, getters) => {
+    let original = getters.filtered;
+    let combined = {};
+    let list = [];
+
+    original.forEach(d => {
+      let address = {
+        id: d.id,
+        address: d.address,
+        audio: d.audio,
+        code: d.code,
+        image1: d.image1,
+        image2: d.image2,
+        image3: d.image3,
+        installed: d.installed,
+        lat: d.lat,
+        lng: d.lng,
+        story: d.story,
+        theme: d.theme,
+        theme_color: d.theme_color,
+        theme_class: d.theme_class
+      }
+      if (!combined[d.artist]){
+        combined[d.artist] = {
+          id: d.artist_id,
+          name: d.artist,
+          website: d.website,
+          location: d.location,
+          visitor: d.visitor,
+          visible: false,
+          addresses: [address]
+        }
+      } else {
+        combined[d.artist].addresses.push(address);
+      }
+    });
+
+    for (let artist in combined){
+      list.push(combined[artist]);
+    }
+
+    list.sort((a,b) => {
+      let nameA = a.name.toUpperCase();
+      let nameB = b.name.toUpperCase();
+      if (nameA < nameB) {
+        return -1;
+      }
+      if (nameA > nameB) {
+        return 1;
+      }
+
+      // names must be equal
+      return 0;
+    });
+
+    return list;
   }
 }

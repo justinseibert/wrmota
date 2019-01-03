@@ -13,8 +13,8 @@
   export default {
 
     computed: {
-      codedData() {
-        return this.$store.getters.mapFiltered;
+      codeData() {
+        return this.$store.getters.filtered;
       }
     },
 
@@ -66,7 +66,7 @@
 
     mounted() {
       this.createMap(this.$refs._map);
-      this.createArtistPoints(this.codedData);
+      this.createArtistPoints();
     },
 
     methods: {
@@ -153,10 +153,8 @@
         );
       },
 
-      createArtistPoints: function(data){
-        let address = data;
-        for (let i in address){
-          let item = address[i][0];
+      createArtistPoints: function(){
+        this.codeData.forEach(item => {
           let marker = this.createMarker(
             [item.lat,item.lng],
             { color: item.theme_color }
@@ -167,7 +165,7 @@
           marker.on('click', function(el){
             this.findArtist(marker);
           }, this);
-        }
+        });
       },
 
       findArtist: function(active){
