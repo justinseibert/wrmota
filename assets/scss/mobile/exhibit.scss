@@ -1,0 +1,24 @@
+.component__artist_list {
+  h3 {
+    font-size: 1.4em;
+  }
+  h4 {
+    font-size: 1em;
+  }
+  .artist-info {
+    background: color(body);
+    padding: 0 space(light);
+    cursor: pointer;
+    &:hover {
+      background: color(container);
+    }
+  }
+  .artist-link {
+    height: 3em;
+    width: 3em;
+    padding: space(light, 1.2);
+    & svg {
+      fill: color(accent);
+    }
+  }
+}

@@ -1,5 +1,5 @@
 <template>
-  <article class="component__audio_player row">
+  <section class="component__audio_player row">
     <header class="row spaced -left">
 
       <div @click="toggleAudio">
@@ -26,8 +26,8 @@
       :handleSeek="seek"
     ></audio-track>
 
-    <p>{{ player.audio_story }}</p>
-  </article>
+    <p>{{ player.story }}</p>
+  </section>
 </template>
 
 <script>
@@ -45,20 +45,12 @@
       code: {
         type: String,
         default: 'ABCD'
-      }
-    },
-
-    computed: {
-      player() {
-        return this.$store.getters.mapFiltered[this.code][0];
       },
-      file() {
-        return [
-          process.env.MEDIA,
-          '/',
-          this.player.audio_directory,
-          this.player.audio_file
-        ].join('');
+      player: {
+        type: Object,
+        default: function(){
+          return {};
+        }
       }
     },
 
@@ -72,10 +64,6 @@
           progress: 0,
         }
       }
-    },
-
-    mounted() {
-      console.log(this.file);
     },
 
     created() {
@@ -114,7 +102,7 @@
         var id = this.player.audio_file;
         if (!this.audio[id]){
           this.audio.files[id] = new Howl({
-            src: ['.mp3','.webm','.ogg','.m4a'].map(ext => this.file + ext),
+            src: ['.mp3','.webm','.ogg','.m4a'].map(ext => this.player.audio + ext),
             html5: true,
           });
         } else {
