@@ -1,6 +1,10 @@
 // COLORS
 
 $theme_colors: (
+  blue: #347cff,
+  green: #50e04a,
+  red: #ff384c,
+  orange: #ffbb00,
   community: #823B93,
   culture: #F89F34,
   moving: #FDD729,
@@ -25,13 +29,18 @@ $wrmota_fonts: (
     style: normal
   ),
   subheader: (
-    family: ("Bitter", sans-serif),
+    family: ("Bitter", serif),
     weight: 700,
     style: normal
   ),
   body: (
-    family: ("Bitter", sans-serif),
+    family: ("Bitter", serif),
     weight: 400,
+    style: normal
+  ),
+  body-emphasis: (
+    family: ("Bitter", serif),
+    weight: 700,
     style: normal
   ),
 );

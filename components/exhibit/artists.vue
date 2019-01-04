@@ -4,15 +4,16 @@
       v-for="(artist, index) in artists"
     >
       <dt
-        class="row spaced artist-info"
+        class="row spaced artist-item"
         v-on:click="toggleAudio(index)"
       >
-        <div>
+        <div class="artist-info">
           <h3>{{ artist.name }}</h3>
           <h4>{{ artist.location }}</h4>
         </div>
         <a
           :href="artist.website"
+          :title="'Visit ' + artist.name + '\'s website.'"
           target="blank"
           v-if="artist.website"
           class="artist-link"
