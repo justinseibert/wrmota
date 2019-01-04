@@ -5,6 +5,7 @@ $theme_colors: (
   green: #50e04a,
   red: #ff384c,
   orange: #ffbb00,
+
   community: #823B93,
   culture: #F89F34,
   moving: #FDD729,
@@ -12,7 +13,9 @@ $theme_colors: (
   school: #00A09B,
   nostalgia: #DA519C,
   water: #009EE0,
-  uninstalled: #CCC
+  uninstalled: #CCC,
+
+  scroll: #347cff,
 );
 
 $colors: map-merge(

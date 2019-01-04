@@ -14,7 +14,7 @@
         >{{ key }}</li>
       </ul>
     </nav>
-    <section ref="_exhibit_details" class="exhibit-details -full-container">
+    <section ref="_exhibit_details" class="exhibit-details -full-container _scrollable">
       <keep-alive>
         <component
           :is="details[active]"
@@ -38,6 +38,10 @@
         type: String,
         default: 'tabName'
       }
+    },
+
+    mounted() {
+      this.$overlayScrollbars();
     },
 
     data() {

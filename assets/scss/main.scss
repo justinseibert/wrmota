@@ -9,6 +9,8 @@
 @import 'mobile/audio';
 @import 'mobile/exhibit';
 
+@import '../esprcsso/_optional/overlayscrollbars';
+
 #__nuxt,
 #__layout {
   @extend body;
