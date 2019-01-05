@@ -53,7 +53,7 @@
           show_all: true,
         },
         map: null,
-        markers: [],
+        markers: {},
         layers: {
           base: null,
           overlay: null,
@@ -62,6 +62,14 @@
           highlight: null,
         },
       }
+    },
+
+    created() {
+      this.$root.$on('artist-selection', (selection) => this.findArtist(selection));
+    },
+
+    destroyed() {
+      this.$root.$off('artist-selection', this.findArtist);
     },
 
     mounted() {
@@ -160,49 +168,76 @@
             { color: item.theme_color }
           ).addTo(this.map);
           marker.data = item;
-          this.markers.push(marker);
+          this.markers[item.code] = marker;
 
           marker.on('click', function(el){
-            this.findArtist(marker);
+            this.findArtist({code: item.code});
           }, this);
         });
       },
 
-      findArtist: function(active){
-        this.markers.forEach(marker => {
-          marker.setStyle({
+      selectSingleCode: function(code){
+        this.highlight(code);
+
+        let currentZoom = this.map.getZoom();
+        let maxZoom = this.config.zoom.max - 3;
+        let zoom = (currentZoom > maxZoom) ? currentZoom : maxZoom;
+        this.map.flyTo(L.latLng(this.markers[code].data.lat, this.markers[code].data.lng), zoom, {padding: this.config.padding, duration: 0.4});
+      },
+
+      selectMultipleCodes: function(codes){
+        let bounds = [];
+        codes.forEach(code => {
+          this.highlight(code);
+          bounds.push([this.markers[code].data.lat, this.markers[code].data.lng]);
+        });
+
+        let currentZoom = this.map.getZoom();
+        let maxZoom = this.config.zoom.max - 3;
+        let zoom = (currentZoom > maxZoom) ? currentZoom : maxZoom;
+
+        this.map.flyToBounds(L.latLngBounds(bounds), {padding: [100,100], duration: 0.4,});
+      },
+
+      findArtist: function(selection){
+        for (let marker in this.markers){
+          this.markers[marker].setStyle({
             ...this.config.icon,
             ...{
-              fillColor: marker.data.theme_color,
+              fillColor: this.markers[marker].data.theme_color,
               radius: 6,
               weight: 0,
             }
           });
-        });
+        }
 
-        active
+        if (typeof selection === 'string'){
+          this.selectSingleCode(selection);
+        } else {
+          this.selectMultipleCodes(selection);
+        }
+      },
+
+      highlight: function(code){
+        this.markers[code]
           .bringToFront()
           .setStyle({
             radius: 10,
             weight: 8,
             fillColor: this.config.icon.fillColor,
-            color: active.data.theme_color
+            color: this.markers[code].data.theme_color
           });
-
-        let currentZoom = this.map.getZoom();
-        let maxZoom = this.config.zoom.max - 3;
-        let zoom = (currentZoom > maxZoom) ? currentZoom : maxZoom;
-        this.map.flyTo(L.latLng(active.data.lat, active.data.lng), zoom, {padding: this.config.padding, duration: 0.4});
       },
 
       removeHighlight: function(){
-        this.markers.forEach(marker => {
-          marker.setStyle({
+        for (let marker in this.markers){
+          this.markers[marker].setStyle({
             ...this.config.icon,
-            ...{color: marker.data.theme_color}
+            ...{color: this.markers[marker].data.theme_color}
           });
-        });
+        }
       }
+
     }
 
   }

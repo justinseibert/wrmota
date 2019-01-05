@@ -58,6 +58,7 @@
     data() {
       return {
         artists: {},
+        previous: false,
       }
     },
 
@@ -73,15 +74,18 @@
 
       toggleAudio(index){
 
-        // this.$root.$emit('artist-selection', this.artists[index]);
+        let codes = this.artists[index].addresses.map(address => address.code);
+        codes = (codes.length < 2) ? codes[0] : codes;
+        this.$root.$emit('artist-selection', codes);
 
-        let tmp = JSON.parse(JSON.stringify(this.artists));
-        let open = tmp[index].visible = !tmp[index].visible;
-        this.artists = Object.assign({}, tmp);
-
-        if (open){
-          this.scrollbar.scroll(document.getElementById(`_artist_${index}`), 500);
+        if (!this.artists[index].visible){
+          let tmp = JSON.parse(JSON.stringify(this.artists));
+          tmp[index].visible = true;
+          this.artists = Object.assign({}, tmp);
         }
+
+        this.scrollbar.scroll(document.getElementById(`_artist_${index}`), 500);
+        this.previous = index;
       }
 
     }

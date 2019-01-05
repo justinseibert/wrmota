@@ -1,8 +1,8 @@
 <template>
   <article class="component__exhibit">
     <header ref="_exhibit_header" class="exhibit-header">
-      <h1>WRMOTA</h1>
-      <h2>Summer, Fall 2018</h2>
+      <h1>{{ title }}</h1>
+      <h2>{{ subtitle }}</h2>
     </header>
     <nav ref="_exhibit_nav" class="exhibit-nav">
       <ul>
@@ -14,7 +14,7 @@
         >{{ key }}</li>
       </ul>
     </nav>
-    <section ref="_exhibit_details" class="exhibit-details -full-container _scrollable">
+    <section ref="_exhibit_details" class="exhibit-details">
       <keep-alive>
         <component
           :is="details[active]"
@@ -28,6 +28,14 @@
   export default {
 
     props: {
+      title: {
+        type: String,
+        default: 'Archive'
+      },
+      subtitle: {
+        type: String,
+        default: ''
+      },
       details: {
         type: Object,
         default: {
@@ -38,10 +46,6 @@
         type: String,
         default: 'tabName'
       }
-    },
-
-    mounted() {
-      this.$overlayScrollbars();
     },
 
     data() {
