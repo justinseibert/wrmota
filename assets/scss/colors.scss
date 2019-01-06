@@ -20,3 +20,19 @@
     }
   }
 }
+
+$permutation_map: (
+  A: color(blue),
+  B: color(green),
+  C: color(red),
+  D: color(orange),
+  E: color(uninstalled),
+  F: color(body)
+);
+
+@each $item,$color in $permutation_map {
+  .background-#{$item},
+  .permutation-#{$item} {
+    background-color: $color;
+  }
+}

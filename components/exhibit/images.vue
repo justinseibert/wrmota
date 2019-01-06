@@ -1,10 +1,10 @@
 <template>
   <div
     id="_scroll_artist_images"
-    class="-full-container -frame-medium component__artist_images"
+    class="-full-container component__artist_images"
   >
     <div
-      class="row"
+      class="row image-container"
       v-for="(artist, index) in artistData"
       ref="_image_containers"
     >
@@ -22,17 +22,9 @@
           <h3>{{ artist.name }} <span>&mdash;</span> {{ address.address }}</h3>
         </header>
 
-        <!-- <div class="row spaced -frame-light -unframe-x">
-          <div
-            v-for="image in address.image.large"
-            class="lazy-images grid g4"
-            v-lazy:background-image="image"
-          />
-        </div> -->
-
         <div
           v-for="image in address.image.large.slice().reverse()"
-          class="lazy-images"
+          class="lazy-images -break-heavy"
           v-lazy:background-image="image"
         />
       </section>
@@ -105,12 +97,14 @@
       handleScroll: function(){
         // console.log('image: handleScroll');
         if (this.sync){
-          console.log('image: sync');
+          // console.log('image: sync');
           let position = this.scrollbar.scroll().position.y + (window.innerHeight / 2);
-          let index = this.tops.slice().findIndex(y => y > position);
+          let index = this.tops.slice().findIndex(y => y > position) - 1;
 
           // console.log('emit: scroll-to-artist');
-          this.$root.$emit('scroll-to-artist-index', index - 1);
+          if (index > -1){
+            this.$root.$emit('scroll-to-artist-index', index);
+          }
         } else {
           this.sync = true;
         }

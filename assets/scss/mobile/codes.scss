@@ -1,0 +1,11 @@
+.code-container {
+  position: fixed;
+  top: 0;
+  left: space(light, -3);
+  width: space(light, 4);
+}
+
+.permutation-block {
+  @include -background-image();
+  margin-bottom: space(light);
+}

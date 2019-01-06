@@ -1,0 +1,58 @@
+.component__nav {
+  ul {
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    width: 100%;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  li {
+    @include -font(body-emphasis);
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    float: left;
+    padding: space(light, 1.5) space(light);
+    text-align: center;
+    text-transform: capitalize;
+    cursor: pointer;
+  }
+}
+
+@mixin -wrmota-nav($color:nostalgia, $style:normal){
+  $positive: color(body);
+  $negative: $color;
+
+  @if $style == inverted {
+    $positive: $color;
+    $negative: color(body);
+  }
+
+  background: $positive;
+  color: $negative;
+  li {
+    &:hover {
+      background: lighten($positive, 5);
+    }
+    &.active {
+      background: $negative;
+      color: $positive;
+    }
+  }
+}
+
+$wrmota_nav_map: (
+  nostalgia: color(nostalgia),
+  blue: color(blue),
+);
+
+@each $item,$color in $wrmota_nav_map {
+  .nav-#{$item} {
+    @include -wrmota-nav($color);
+  }
+  .nav-#{$item}-invert {
+    @include -wrmota-nav($color, inverted);
+  }
+}

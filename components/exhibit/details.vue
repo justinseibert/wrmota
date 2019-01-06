@@ -1,31 +1,42 @@
 <template>
-  <article class="component__exhibit">
+  <article class="component__exhibit_details -column">
+
+    <nav-code
+      :top="codeY"
+    ></nav-code>
+
     <header ref="_exhibit_header" class="exhibit-header">
       <h1>{{ title }}</h1>
       <h2>{{ subtitle }}</h2>
     </header>
-    <nav ref="_exhibit_nav" class="exhibit-nav">
-      <ul>
-        <li
-        v-for="(value, key) in details"
-        :key="key"
-        :class="(active == key) ? 'active' : ''"
-        @click="active = key"
-        >{{ key }}</li>
-      </ul>
-    </nav>
-    <section ref="_exhibit_details" class="exhibit-details">
+
+    <nav-tabs
+      class="exhibit-nav nav-nostalgia-invert"
+      :tabs="tabs"
+      :active="active"
+    ></nav-tabs>
+
+    <section ref="_exhibit_details" class="exhibit-details fill-column">
       <keep-alive>
         <component
-          :is="details[active]"
+          :is="tabs[active]"
         ></component>
       </keep-alive>
     </section>
+
   </article>
 </template>
 
 <script>
+  import NavTabs from '~/components/nav/tabs';
+  import NavCode from '~/components/nav/code';
+
   export default {
+
+    components: {
+      NavCode,
+      NavTabs,
+    },
 
     props: {
       title: {
@@ -36,7 +47,7 @@
         type: String,
         default: ''
       },
-      details: {
+      tabs: {
         type: Object,
         default: {
           tabName: 'tabComponent'
@@ -51,7 +62,12 @@
     data() {
       return {
         active: this.initialTab,
+        codeY: 100,
       }
+    },
+
+    mounted() {
+      this.codeY = this.$refs._exhibit_details.offsetTop;
     }
 
   }

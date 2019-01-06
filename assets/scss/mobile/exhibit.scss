@@ -1,11 +1,24 @@
-.component__exhibit {
+.exhibit-container {
   @extend .-full-container;
-  position: absolute;
-  top: 0;
-  left: 0;
+  max-width: 36em;
+  padding: space(light);
+  padding-right: 0;
+}
+
+.content-container {
+  @extend .-full-container;
+  max-width: calc(100% - 36em);
+  padding: space(light);
+  padding-left: space(light, 1.5);
+}
+
+.component__exhibit_details {
   z-index: z(interactive);
-  display: flex;
-  flex-direction: column;
+
+  .exhibit-header,
+  .exhibit-nav {
+    width: calc(100% - #{space(medium)});
+  }
 
   .exhibit-header {
     text-align: center;
@@ -14,40 +27,10 @@
     color: color(body);
   }
 
-  .exhibit-nav {
-    background: color(nostalgia);
-    color: color(body);
-    & ul {
-      display: flex;
-      justify-content: space-between;
-      align-items: stretch;
-      width: 100%;
-      list-style: none;
-      margin: 0;
-      padding: 0;
-    }
-    & li {
-      @include -font(body-emphasis);
-      display: flex;
-      flex: 1;
-      justify-content: center;
-      float: left;
-      padding: space(light, 1.5) space(light);
-      text-align: center;
-      text-transform: capitalize;
-      cursor: pointer;
-      &:hover {
-        background: lighten(color(nostalgia), 5);
-      }
-      &.active {
-        background: color(body);
-        color: color(nostalgia);
-      }
-    }
-  }
-
   .exhibit-details {
-    flex: 1 1 auto;
+    .component__artist_list {
+      padding-right: space(medium);
+    }
   }
 
   h1,
