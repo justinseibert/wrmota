@@ -1,0 +1,55 @@
+.lazy-images {
+  @include -background-image(100%, 67%);
+  margin: 0 0 space(medium) 0;
+  background-color: color(container);
+  transition: background-image 300ms;
+  &:after {
+    @extend .-loading-animation;
+  }
+}
+
+.image-container {
+  margin-top: 200%;
+}
+
+.lazy-image[lazy=loading] {
+}
+
+.lazy-images[lazy=loaded] {
+  &:after {
+    opacity: 0;
+    transition: opacity 400ms;
+  }
+}
+
+// .lazy-loading {
+//   position: absolute;
+//   width: 100%;
+//   height: 100%;
+//   @extend .-loading-animation;
+// }
+
+.map-marker {
+  position: relative;
+  top: 0.1em;
+  width: 1.5em;
+  height: 1.5em;
+  border-style: solid;
+  border-width: 0.5em;
+  border-radius: 50%;
+  line-height: 0;
+  margin-right: space(medium);
+}
+
+.component__artist_images {
+  header {
+    cursor: pointer;
+  }
+  h3 {
+    margin: 0;
+    span {
+      margin: 0 space(minimal);
+      font-weight: lighter;
+    }
+  }
+}

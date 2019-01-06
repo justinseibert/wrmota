@@ -64,6 +64,7 @@
 
     created() {
       this.artists = JSON.parse(JSON.stringify(this.artistData));
+      this.$root.$on('scroll-to-artist-index', (index) => this.toggleAudio(index, false))
     },
 
     mounted() {
@@ -72,11 +73,10 @@
 
     methods: {
 
-      toggleAudio(index){
-
+      toggleAudio(index, sync=true){
+        // console.log('artist: toggleAudio');
         let codes = this.artists[index].addresses.map(address => address.code);
         codes = (codes.length < 2) ? codes[0] : codes;
-        this.$root.$emit('artist-selection', codes);
 
         if (!this.artists[index].visible){
           let tmp = JSON.parse(JSON.stringify(this.artists));
@@ -84,7 +84,13 @@
           this.artists = Object.assign({}, tmp);
         }
 
+        if (sync){
+          // console.log('emit: artist-selection');
+          this.$root.$emit('artist-selection', codes);
+        }
+
         this.scrollbar.scroll(document.getElementById(`_artist_${index}`), 500);
+
         this.previous = index;
       }
 

@@ -81,18 +81,44 @@ export const getters = {
     let data = state.data;
 
     let filtered = data.map(d => {
+
       return {
         ...d,
         ...{
           theme_color: d.installed > 0 ? colors[d.theme] : colors.uninstalled,
           theme_class: `theme-${d.theme}`,
           audio: process.env.MEDIA + '/' + d.audio_directory + d.audio,
-          image1: d.image1_directory + d.image1 + d.image1_extension,
-          image2: d.image2_directory + d.image2 + d.image2_extension,
-          image3: d.image3_directory + d.image3 + d.image3_extension,
+          image: {
+            large: [
+              process.env.MEDIA + '/' + d.image1_directory + d.image1 + '-large.' + d.image1_extension,
+              process.env.MEDIA + '/' + d.image2_directory + d.image2 + '-large.' + d.image2_extension,
+              process.env.MEDIA + '/' + d.image3_directory + d.image3 + '-large.' + d.image3_extension,
+            ],
+            medium: [
+              process.env.MEDIA + '/' + d.image1_directory + d.image1 + '-medium.' + d.image1_extension,
+              process.env.MEDIA + '/' + d.image2_directory + d.image2 + '-medium.' + d.image2_extension,
+              process.env.MEDIA + '/' + d.image3_directory + d.image3 + '-medium.' + d.image3_extension,
+            ],
+            small: [
+              process.env.MEDIA + '/' + d.image1_directory + d.image1 + '-small.' + d.image1_extension,
+              process.env.MEDIA + '/' + d.image2_directory + d.image2 + '-small.' + d.image2_extension,
+              process.env.MEDIA + '/' + d.image3_directory + d.image3 + '-small.' + d.image3_extension,
+            ],
+          },
           website: d.website ? 'http://' + d.website : false,
         }
       }
+    });
+
+    return filtered;
+  },
+
+  codeFiltered: (state,getters) => {
+    let original = getters.filtered;
+    let filtered = {};
+
+    original.forEach(data => {
+      filtered[data.code] = data;
     });
 
     return filtered;
@@ -109,9 +135,7 @@ export const getters = {
         address: d.address,
         audio: d.audio,
         code: d.code,
-        image1: d.image1,
-        image2: d.image2,
-        image3: d.image3,
+        image: d.image,
         installed: d.installed,
         lat: d.lat,
         lng: d.lng,

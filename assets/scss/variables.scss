@@ -16,6 +16,8 @@ $theme_colors: (
   uninstalled: #CCC,
 
   scroll: #347cff,
+  loading-a: lighten(#ff384c, 30),
+  loading-b: #fff,
 );
 
 $colors: map-merge(
