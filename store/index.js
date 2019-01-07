@@ -53,6 +53,7 @@ export const getters = {
       return {
         ...d,
         ...{
+          stripped_name: d.artist.replace(/[\s\.]/gi, ''),
           theme_color: d.installed > 0 ? colors[d.theme] : colors.uninstalled,
           theme_class: `theme-${d.installed > 0 ? d.theme : 'uninstalled'}`,
           audio: process.env.MEDIA + '/' + d.audio_directory + d.audio,
@@ -105,6 +106,7 @@ export const getters = {
         combined[d.artist] = {
           id: d.artist_id,
           name: d.artist,
+          stripped_name: d.stripped_name,
           website: d.website,
           location: d.location,
           visitor: d.visitor,
