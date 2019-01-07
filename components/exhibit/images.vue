@@ -5,8 +5,9 @@
   >
     <div
       class="row image-container"
-      v-for="(artist, index) in artistData"
+      v-for="(artist, index) in artists"
       ref="_image_containers"
+      :id="'_images_'+index"
     >
       <section
         v-for="address in artist.addresses"
@@ -22,11 +23,23 @@
           <h3>{{ artist.name }} <span>&mdash;</span> {{ address.address }}</h3>
         </header>
 
-        <div
-          v-for="image in address.image.large.slice().reverse()"
-          class="lazy-images -break-heavy"
-          v-lazy:background-image="image"
-        />
+        <div class="row spaced">
+          <div
+            class="lazy-images grid g6"
+            v-lazy:background-image="address.image.medium[2]"
+          />
+
+          <div
+            class="lazy-images grid g6"
+            v-lazy:background-image="address.image.medium[1]"
+          />
+
+          <div
+            class="lazy-images -break-heavy grid"
+            v-lazy:background-image="address.image.large[0]"
+          />
+        </div>
+
       </section>
     </div>
   </div>
@@ -38,85 +51,83 @@
   export default {
 
     computed: {
-      codeData() {
-        return this.$store.getters.codeFiltered;
+      artists() {
+        return this.$store.getters.artistAlphaList;
       },
-      artistData() {
-        return this.$store.getters.artistSort;
+      index() {
+        return this.$store.state.index;
+      }
+    },
+
+    watch: {
+      index() {
+        this.update = false;
+        if (this.componentActive && this.sync){
+          this.scrollTo();
+        }
+        this.sync = true;
       }
     },
 
     data() {
       return {
-        selection: {},
         scrollbar: null,
-        tops: [],
+        offsets: [],
         sync: true,
+        update: true,
       }
-    },
-
-    created(){
-      this.$root.$on('artist-selection', (codes) => this.showArtwork(codes))
     },
 
     mounted() {
       this.scrollbar = this.$overlayScrollbars('#_scroll_artist_images', {
           callbacks: {
             onScroll: debounce(this.handleScroll.bind(this), 50),
-            // onScrollStop: this.handleScroll,
             onContentSizeChanged: debounce(this.handleContentSizeChanged.bind(this), 100)
           }
       });
     },
 
+    activated() {
+      this.componentActive = true;
+      this.scrollbar.update(true);
+      this.$nextTick(() => {
+        this.scrollTo();
+      });
+    },
+
+    deactivated() {
+      this.componentActive = false;
+    },
+
     methods: {
-      showArtwork: function(codes) {
-        if (typeof codes === 'string'){
-          this.panTo(codes);
-        } else {
-          this.panTo(codes[0]);
-        }
-      },
-
-      panTo: function(code) {
+      scrollTo: function() {
         // console.log('image: handlePanTo');
-        this.sync = false;
-        let tmp = JSON.parse(JSON.stringify(this.selection));
-        tmp[code] = [
-          this.codeData[code].image1,
-          this.codeData[code].image2,
-          this.codeData[code].image3,
-        ];
-        this.selection = Object.assign({}, tmp);
-
-        this.$nextTick(() => {
-          this.scrollbar.scroll(document.getElementById(`_images_${code}`));
-        })
+        if (this.index > -1){
+          this.scrollbar.scroll(document.getElementById(`_images_${this.index}`));
+        }
       },
 
       handleScroll: function(){
         // console.log('image: handleScroll');
-        if (this.sync){
-          // console.log('image: sync');
-          let position = this.scrollbar.scroll().position.y + (window.innerHeight / 2);
-          let index = this.tops.slice().findIndex(y => y > position) - 1;
+        if (this.update){
+          let position = this.scrollbar.scroll().position.y + (window.innerHeight * 0.6);
+          let index = this.offsets.slice().findIndex(y => y > position) - 1;
 
-          // console.log('emit: scroll-to-artist');
           if (index > -1){
-            this.$root.$emit('scroll-to-artist-index', index);
+            this.sync = false;
+            this.$store.commit('index', index);
           }
-        } else {
-          this.sync = true;
         }
+        this.update = true;
       },
 
       handleContentSizeChanged: function(e){
         // console.log('image: handleContentSizeChanged');
-        let tops = [];
+        let offsets = [];
         this.$refs._image_containers.forEach(el => {
-          tops.push(el.offsetTop);
+          offsets.push(el.offsetTop);
         });
-        this.tops = tops.slice();
+        this.offsets = offsets.slice();
       }
 
     }

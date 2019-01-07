@@ -1,6 +1,7 @@
 export const state = () => ({
 
   data: null,
+  index: -1,
 
 })
 
@@ -21,50 +22,17 @@ export const actions = {
 
 export const mutations = {
 
-  increment (state) {
-    state.counter++
+  index (state, index) {
+    state.index = index;
   },
 
   setServerData(state, data) {
-    state.data = data
+    state.data = data;
   }
 
 }
 
-
 export const getters = {
-
-  mapFiltered: state => {
-
-    const colors = {
-      community: '#823B93',
-      culture: '#F89F34',
-      moving: '#FDD729',
-      music: '#89C54C',
-      school: '#00A09B',
-      nostalgia: '#DA519C',
-      water: '#009EE0',
-      uninstalled: '#CCC'
-    };
-
-    let data = state.data.codes.data;
-    let filtered = {};
-
-    for (let i in data){
-      if (data[i][0].artist_name){
-        let theme = data[i][0].theme
-        let color = data[i][0].installed > 0 ? colors[theme] : colors.uninstalled;
-
-        data[i][0].original_theme = theme;
-        data[i][0].theme_color = color ;
-        data[i][0].theme_class = `theme-${theme}`;
-
-        filtered[i] = data[i];
-      }
-    }
-
-    return filtered;
-  },
 
   filtered: state => {
     const colors = {
@@ -86,7 +54,7 @@ export const getters = {
         ...d,
         ...{
           theme_color: d.installed > 0 ? colors[d.theme] : colors.uninstalled,
-          theme_class: `theme-${d.theme}`,
+          theme_class: `theme-${d.installed > 0 ? d.theme : 'uninstalled'}`,
           audio: process.env.MEDIA + '/' + d.audio_directory + d.audio,
           image: {
             large: [
@@ -113,18 +81,7 @@ export const getters = {
     return filtered;
   },
 
-  codeFiltered: (state,getters) => {
-    let original = getters.filtered;
-    let filtered = {};
-
-    original.forEach(data => {
-      filtered[data.code] = data;
-    });
-
-    return filtered;
-  },
-
-  artistSort: (state, getters) => {
+  artistAlphaList: (state, getters) => {
     let original = getters.filtered;
     let combined = {};
     let list = [];

@@ -13,17 +13,24 @@
   export default {
 
     computed: {
-      codeData() {
-        return this.$store.getters.filtered;
+      artists() {
+        return this.$store.getters.artistAlphaList;
+      },
+      index() {
+        return this.$store.state.index;
+      }
+    },
+
+    watch: {
+      index() {
+        if (this.componentActive && this.index > -1){
+          this.findArtist();
+        }
       }
     },
 
     data() {
       return {
-        showFooter: true,
-        fetch_attempt: 0,
-        artistData: null,
-        points: false,
         config: {
           bounds: {
             n: 40.35535,
@@ -50,31 +57,53 @@
             opacity: 1,
           },
           map: `${process.env.SERVER}/img/map/map.min.svg`,
-          show_all: true,
         },
         map: null,
         markers: {},
         layers: {
-          base: null,
           overlay: null,
           streets: [],
-          marker: null,
-          highlight: null,
         },
+        componentActive: true,
+        init: true,
       }
-    },
-
-    created() {
-      this.$root.$on('artist-selection', (selection) => this.findArtist(selection));
-    },
-
-    destroyed() {
-      this.$root.$off('artist-selection', this.findArtist);
     },
 
     mounted() {
       this.createMap(this.$refs._map);
       this.createArtistPoints();
+    },
+
+    created() {
+      this.init = true;
+      document.addEventListener('keydown', this.handleEscKey);
+    },
+
+    destroyed() {
+      document.removeEventListener('keydown', this.handleEscKey);
+    },
+
+    activated() {
+      this.componentActive = true;
+      document.addEventListener('keydown', this.handleEscKey);
+
+      if (this.init){
+        this.map.setView(L.latLng(this.config.center), this.config.zoom.init);
+        this.init = false;
+      } else {
+        try {
+          this.map.invalidateSize();
+          this.findArtist(false);
+        } catch(e) {
+          console.log('can not find artist?');
+        }
+      }
+
+    },
+
+    deactivated() {
+      this.componentActive = false;
+      document.removeEventListener('keydown', this.handleEscKey);
     },
 
     methods: {
@@ -110,13 +139,6 @@
         this.showStreets();
 
         this.map.on('zoomend', debounce(this.showStreets.bind(this), 100));
-        // this.map.on('zoomend', () => this.showStreets());
-
-        document.addEventListener('keydown', (e) => {
-          if (e.key == 'Esc' || e.key == 'Escape'){
-            this.removeHighlight();
-          }
-        })
       },
 
       showStreets: function(){
@@ -162,60 +184,72 @@
       },
 
       createArtistPoints: function(){
-        this.codeData.forEach(item => {
-          let marker = this.createMarker(
-            [item.lat,item.lng],
-            { color: item.theme_color }
-          ).addTo(this.map);
-          marker.data = item;
-          this.markers[item.code] = marker;
+        this.artists.forEach((artist,index) => {
+          artist.addresses.forEach(address => {
 
-          marker.on('click', function(el){
-            this.findArtist({code: item.code});
-          }, this);
-        });
+            let marker = this.createMarker(
+              [address.lat,address.lng],
+              { color: address.theme_color }
+            ).addTo(this.map);
+
+            marker.address = address;
+            marker.index = index;
+
+            this.markers[address.code] = marker;
+
+            marker.on('click', function(el){
+              this.$store.commit('index', index);
+            }, this);
+          })
+        })
       },
 
-      selectSingleCode: function(code){
+      findArtist: function(animate=true){
+        let addresses = this.artists[this.index].addresses;
+        let code = addresses.map(address => address.code);
+
+        if (code.length == 1){
+          this.selectSingleCode(code[0], animate);
+        } else {
+          this.selectMultipleCodes(code, animate);
+        }
+      },
+
+      selectSingleCode: function(code, animate=true){
+        this.minimizeAll();
         this.highlight(code);
 
         let currentZoom = this.map.getZoom();
         let maxZoom = this.config.zoom.max - 3;
         let zoom = (currentZoom > maxZoom) ? currentZoom : maxZoom;
-        this.map.flyTo(L.latLng(this.markers[code].data.lat, this.markers[code].data.lng), zoom, {padding: this.config.padding, duration: 0.4});
+
+        this.map.flyTo(
+          L.latLng(this.markers[code].address.lat, this.markers[code].address.lng),
+          zoom,
+          {
+            padding: this.config.padding,
+            duration: 0.4,
+            animate: animate
+          }
+        );
       },
 
-      selectMultipleCodes: function(codes){
+      selectMultipleCodes: function(codes, animate=true){
         let bounds = [];
+        this.minimizeAll();
         codes.forEach(code => {
           this.highlight(code);
-          bounds.push([this.markers[code].data.lat, this.markers[code].data.lng]);
+          bounds.push([this.markers[code].address.lat, this.markers[code].address.lng]);
         });
 
-        let currentZoom = this.map.getZoom();
-        let maxZoom = this.config.zoom.max - 3;
-        let zoom = (currentZoom > maxZoom) ? currentZoom : maxZoom;
-
-        this.map.flyToBounds(L.latLngBounds(bounds), {padding: [100,100], duration: 0.4,});
-      },
-
-      findArtist: function(selection){
-        for (let marker in this.markers){
-          this.markers[marker].setStyle({
-            ...this.config.icon,
-            ...{
-              fillColor: this.markers[marker].data.theme_color,
-              radius: 6,
-              weight: 0,
-            }
-          });
-        }
-
-        if (typeof selection === 'string'){
-          this.selectSingleCode(selection);
-        } else {
-          this.selectMultipleCodes(selection);
-        }
+        this.map.flyToBounds(
+          L.latLngBounds(bounds),
+          {
+            padding: [100,100],
+            duration: 0.4,
+            animate: animate
+          }
+        );
       },
 
       highlight: function(code){
@@ -225,18 +259,37 @@
             radius: 10,
             weight: 8,
             fillColor: this.config.icon.fillColor,
-            color: this.markers[code].data.theme_color
+            color: this.markers[code].address.theme_color
           });
+      },
+
+      minimizeAll: function(){
+        for (let marker in this.markers){
+          this.markers[marker].setStyle({
+            ...this.config.icon,
+            ...{
+              fillColor: this.markers[marker].address.theme_color,
+              radius: 6,
+              weight: 0,
+            }
+          });
+        }
       },
 
       removeHighlight: function(){
         for (let marker in this.markers){
           this.markers[marker].setStyle({
             ...this.config.icon,
-            ...{color: this.markers[marker].data.theme_color}
+            ...{color: this.markers[marker].address.theme_color}
           });
         }
-      }
+      },
+
+      handleEscKey: function(e){
+        if (e.key.indexOf('Esc') > -1 && this.map){
+          this.removeHighlight();
+        }
+      },
 
     }
 

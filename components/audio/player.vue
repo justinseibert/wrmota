@@ -27,6 +27,7 @@
     ></audio-track>
 
     <p>{{ player.story }}</p>
+    <small v-if="player.installed < 1">This work is no longer installed.</small>
   </section>
 </template>
 

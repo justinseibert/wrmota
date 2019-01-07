@@ -6,7 +6,7 @@
       >
         <dt
           class="row spaced artist-item"
-          v-on:click.stop="toggleAudio(index)"
+          v-on:click.stop="toggleArtist(index)"
           :id="`_artist_${index}`"
         >
           <div class="artist-info">
@@ -51,47 +51,69 @@
 
     computed: {
       artistData() {
-        return this.$store.getters.artistSort;
+        return this.$store.getters.artistAlphaList;
+      },
+      index() {
+        return this.$store.state.index;
+      }
+    },
+
+    watch: {
+      index() {
+        if (this.index > -1 && !this.artists[this.index].visible){
+          let tmp = JSON.parse(JSON.stringify(this.artists));
+          tmp[this.index].visible = true;
+          this.artists = Object.assign({}, tmp);
+        }
+
+        if (this.componentActive){
+          this.$nextTick(() => {
+            this.scrollTo(500);
+          });
+        }
       }
     },
 
     data() {
       return {
         artists: {},
-        previous: false,
+        scrollbar: null,
+        componentActive: true,
       }
     },
 
     created() {
+      // console.log('artists: created');
       this.artists = JSON.parse(JSON.stringify(this.artistData));
-      this.$root.$on('scroll-to-artist-index', (index) => this.toggleAudio(index, false))
     },
 
     mounted() {
+      // console.log('artists: mounted');
       this.scrollbar = this.$overlayScrollbars('#_scroll_artist_list');
+    },
+
+    activated() {
+      this.componentActive = true;
+      this.scrollbar.update(true);
+      this.$nextTick(() => {
+        this.scrollTo(0);
+      });
+    },
+
+    deactivated() {
+      this.componentActive = false;
     },
 
     methods: {
 
-      toggleAudio(index, sync=true){
-        // console.log('artist: toggleAudio');
-        let codes = this.artists[index].addresses.map(address => address.code);
-        codes = (codes.length < 2) ? codes[0] : codes;
+      toggleArtist(index){
+        this.$store.commit('index', index);
+      },
 
-        if (!this.artists[index].visible){
-          let tmp = JSON.parse(JSON.stringify(this.artists));
-          tmp[index].visible = true;
-          this.artists = Object.assign({}, tmp);
+      scrollTo(duration){
+        if (this.index > -1){
+          this.scrollbar.scroll(document.getElementById(`_artist_${this.index}`), duration);
         }
-
-        if (sync){
-          // console.log('emit: artist-selection');
-          this.$root.$emit('artist-selection', codes);
-        }
-
-        this.scrollbar.scroll(document.getElementById(`_artist_${index}`), 500);
-
-        this.previous = index;
       }
 
     }
