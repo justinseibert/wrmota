@@ -1,3 +1,13 @@
+$wrmota_breakpoint: (
+  exhibit-details: 600px,
+  maximum: 1440px,
+  height: 800px,
+);
+
+$breakpoint: map-merge(
+  $breakpoint, $wrmota_breakpoint
+);
+
 // COLORS
 
 $theme_colors: (

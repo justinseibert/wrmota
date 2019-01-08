@@ -1,3 +1,7 @@
+body {
+  font-size: 95%;
+}
+
 h2,
 h3,
 h4,
@@ -21,4 +25,10 @@ hr {
 
 p {
   line-height: 1.4;
+}
+
+@media (min-height: screen(height)) {
+  body {
+    font-size: 100%;
+  }
 }

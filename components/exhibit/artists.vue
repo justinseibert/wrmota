@@ -6,21 +6,24 @@
       >
         <dt
           class="row spaced artist-item"
-          v-on:click.stop="toggleArtist(index)"
+          :class="artist.visible ? 'selected' : ''"
           :id="`_artist_${index}`"
         >
-          <div class="artist-info">
+          <div
+            class="artist-info"
+            v-on:click.stop="toggleArtist(index)"
+          >
             <h3>{{ artist.name }}</h3>
             <h4>{{ artist.location }}</h4>
           </div>
           <a
             :href="artist.website"
             :title="'Visit ' + artist.name + '\'s website.'"
-            target="blank"
+            target="_blank"
             v-if="artist.website"
             class="artist-link"
           >
-            <svg-link></svg-link>
+            <svg-link/>
           </a>
         </dt>
         <dd
@@ -28,11 +31,20 @@
           :key="artist.id"
           class="row"
         >
-          <audio-player
+          <template
             v-for="address in artist.addresses"
-            :key="address.id"
-            :player="address"
-          ></audio-player>
+          >
+            <audio-player
+              :key="address.id"
+              :player="address"
+            />
+            <image-group
+              v-if="isMobile"
+              :address="address"
+              :size="'medium'"
+            />
+
+          </template>
         </dd>
       </template>
     </dl>
@@ -42,11 +54,20 @@
 <script>
   import SvgLink from '~/components/svg/link';
   import AudioPlayer from '~/components/audio/player';
+  import ImageGroup from '~/components/exhibit/image-group';
 
   export default {
     components: {
       SvgLink,
-      AudioPlayer
+      AudioPlayer,
+      ImageGroup
+    },
+
+    props: {
+      isMobile: {
+        type: Boolean,
+        default: false
+      }
     },
 
     computed: {

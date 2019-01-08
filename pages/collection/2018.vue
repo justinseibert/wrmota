@@ -1,16 +1,18 @@
 <template>
-  <div class="-fullscreen-container">
+  <div class="-full-container">
     <exhibit-details
       class="exhibit-container grid"
       :title="title"
       :subtitle="subtitle"
       :tabs="details"
       :initialTab="'about'"
+      :isMobile="isMobile"
     ></exhibit-details>
     <exhibit-content
+      v-if="!isMobile"
       class="content-container grid"
       :tabs="content"
-      :initialTab="'map'"
+      :initialTab="'images'"
     ></exhibit-content>
   </div>
 </template>
@@ -25,6 +27,8 @@
 
   import Images from '~/components/exhibit/images';
   import LeafletMap from '~/components/map/leaflet';
+
+  import debounce from 'lodash.debounce';
 
   export default {
 
@@ -42,7 +46,7 @@
       },
       route() {
         return this.$route.params.artist;
-      }
+      },
     },
 
     watch: {
@@ -68,6 +72,7 @@
           map: LeafletMap,
         },
         previous: -1,
+        isMobile: true,
       }
     },
 
@@ -77,6 +82,13 @@
       } else if (typeof this.route != 'undefined' && this.route.length > 0){
         this.updateIndex();
       }
+
+      window.addEventListener('resize', debounce(this.handleResize.bind(this), 100));
+      this.handleResize();
+    },
+
+    destroyed() {
+      window.removeEventListener('resize', debounce(this.handleResize.bind(this), 100));
     },
 
     methods: {
@@ -93,6 +105,11 @@
       updateIndex: function(){
         let index = this.artists.findIndex(artist => artist.stripped_name == this.route);
         this.$store.commit('index', index);
+      },
+
+      handleResize: function(e){
+        console.log('2018: handleResize');
+        this.isMobile = window.innerWidth >= 600 ? false : true;
       }
     }
 

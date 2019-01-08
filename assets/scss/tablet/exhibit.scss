@@ -1,0 +1,25 @@
+@media (min-width: screen(exhibit-details)){
+  .exhibit-container {
+    max-width: screen(exhibit-details) * 0.5;
+  }
+
+  .content-container {
+    max-width: calc(100% - #{screen(exhibit-details) * 0.5});
+  }
+}
+
+@media (min-width: screen(landscape)){
+  .exhibit-container {
+    max-width: screen(exhibit-details) * 0.65;
+  }
+
+  .content-container {
+    max-width: calc(100% - #{screen(exhibit-details) * 0.65});
+  }
+}
+
+@media (min-height: screen(height)){
+  .exhibit-header {
+    padding: space(medium);
+  }
+}

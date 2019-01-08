@@ -1,0 +1,37 @@
+@media (min-width: screen(desktop)){
+  .exhibit-container {
+    padding: space(light);
+    padding-right: 0;
+    max-width: screen(exhibit-details) * 0.75;
+  }
+
+  .content-container {
+    padding: space(light);
+    padding-left: space(light, 1.5);
+    max-width: calc(100% - #{screen(exhibit-details) * 0.75});
+  }
+
+  .exhibit-header,
+  .exhibit-nav {
+    width: calc(100% - #{space(medium)});
+  }
+
+  .component__artist_list {
+    padding-right: space(medium);
+  }
+
+  .component__about,
+  .component__credits {
+    padding-right: space(light);
+  }
+}
+
+@media (min-width: screen(maximum)){
+  .exhibit-container {
+    max-width: screen(exhibit-details) * 0.85;
+  }
+
+  .content-container {
+    max-width: calc(100% - #{screen(exhibit-details) * 0.85});
+  }
+}

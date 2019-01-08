@@ -2,10 +2,10 @@
   <nav ref="_nav" class="component__nav">
     <ul>
       <li
-      v-for="(value, key) in tabs"
-      :key="key"
-      :class="(active == key) ? 'active' : ''"
-      @click="setActive(key)"
+        v-for="(value, key) in tabs"
+        :key="key"
+        :class="(active == key) ? 'active' : ''"
+        @click="setActive(key)"
       >{{ key }}</li>
     </ul>
   </nav>
@@ -17,8 +17,8 @@
     props: {
       tabs: {
         type: Object,
-        default: {
-          tabName: 'tabComponent'
+        default: function() {
+          return null;
         }
       },
       active: {

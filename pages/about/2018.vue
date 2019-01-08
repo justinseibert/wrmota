@@ -1,6 +1,6 @@
 <template>
-  <div id="_2018_about" class="component__about -full-container -frame-medium -full-container">
-    <div class="row">
+  <section id="_2018_about" class="component__about">
+    <div class="container">
       <img class="grid -break-light" src="/img/2018/west-reading-homes.jpg">
       <p>During the summer and fall of 2018, the West Reading Museum of Temporary Art invited neighbors and vistors alike to explore the streets of West Reading, PA in search of a selection of brick-sized murals installed on homes and businesses throughout.</p>
       <p>The collection sought to unearth personal histories of the borough that would otherwise remain unrecorded.</p>
@@ -19,12 +19,10 @@
         :src="image.paste.src"
         :caption="image.paste.caption"
       />
-      <img class="grid -break-light" src="/img/2018/madeline-gallucci-install.jpg">
-    </div>
+      <img class="grid -break-medium" src="/img/2018/madeline-gallucci-install.jpg">
 
-    <hr>
+      <hr>
 
-    <div class="row">
       <p>The process of uninstalling the artwork began in November, however, many are still up. You can download the app for iOS and Android to experience the work and their stories in-person.</p>
       <p>Work that is no longer installed will not appear on the app's map. These works currently have on a grey icon on this website.</p>
       <p class="row spaced -left -break-light">
@@ -38,7 +36,7 @@
       <p>Though intended as a temporary installation to accompany the borough's large array of permanent murals, the full collection will remain archived on this website.</p>
       <p>Use the tabs and interactive map on this page to listen to the stories and view the original artwork.</p>
     </div>
-  </div>
+  </section>
 </template>
 
 <script>

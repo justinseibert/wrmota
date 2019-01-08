@@ -1,38 +1,18 @@
 .exhibit-container {
   @extend .-full-container;
-  max-width: 36em;
-  padding: space(light);
-  padding-right: 0;
 }
 
 .content-container {
   @extend .-full-container;
-  max-width: calc(100% - 36em);
   padding: space(light);
   padding-left: space(light, 1.5);
 }
 
-.component__exhibit_details {
-  z-index: z(interactive);
-
-  .exhibit-header,
-  .exhibit-nav {
-    width: calc(100% - #{space(medium)});
-  }
-
-  .exhibit-header {
-    text-align: center;
-    padding: space(medium);
-    background: darken(color(nostalgia), 5);
-    color: color(body);
-  }
-
-  .exhibit-details {
-    .component__artist_list {
-      padding-right: space(medium);
-    }
-  }
-
+.exhibit-header {
+  text-align: center;
+  padding: space(light);
+  background: darken(color(nostalgia), 5);
+  color: color(body);
   h1,
   h2 {
     text-align: center;
@@ -59,8 +39,18 @@
     background: color(body);
     padding: 0 space(medium);
     cursor: pointer;
-    &:hover {
-      background: color(container);
+    &:after {
+      content: '';
+      display: block;
+      height: 2px;
+      background: color(blue);
+      width: 100%;
+      margin: 0 auto;
+      transform: scale3d(0,1,1);
+      transition: transform 400ms;
+    }
+    &.selected:after {
+      transform: scale3d(1,1,1);
     }
     &:first-child {
       padding-top: space(minimal,2);
@@ -81,11 +71,20 @@
       fill: color(blue);
     }
   }
+
+  .artist-content {
+    background: color(container);
+  }
 }
 
 .component__about,
 .component__credits {
+  @extend .-full-container;
   background: color(body);
+
+  .container {
+    padding: space(light);
+  }
 
   ul {
     margin: 0;
@@ -108,6 +107,7 @@
       border-radius: 50%;
     }
   }
+
 }
 
 .component__image-caption {

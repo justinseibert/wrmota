@@ -20,6 +20,7 @@
       <keep-alive>
         <component
           :is="tabs[active]"
+          :isMobile="isMobile"
         ></component>
       </keep-alive>
     </section>
@@ -56,6 +57,10 @@
       initialTab: {
         type: String,
         default: 'tabName'
+      },
+      isMobile: {
+        type: Boolean,
+        default: false
       }
     },
 

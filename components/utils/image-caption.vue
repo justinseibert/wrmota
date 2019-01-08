@@ -2,8 +2,8 @@
   <figure class="component__image-caption">
     <img
       :src="src"
-      :title="title"
-      :alt="alt"
+      :title="this.title.length < 1 ? this.caption : this.title"
+      :alt="this.alt.length < 1 ? this.caption : this.alt"
       />
     <figcaption>{{ caption }}</figcaption>
   </figure>
@@ -30,11 +30,6 @@
         default: ''
       },
     },
-
-    created() {
-        this.title = this.title.length < 1 ? this.caption : this.title;
-        this.alt = this.alt.length < 1 ? this.caption : this.alt;
-    }
 
   }
 </script>

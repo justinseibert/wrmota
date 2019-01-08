@@ -1,6 +1,6 @@
 <template>
-  <div id="_2018_credits" class="component__credits -full-container -frame-medium -full-container">
-    <div class="row">
+  <section id="_2018_credits" class="component__credits">
+    <div class="container">
       <p>WRMOTA is produced and organized by Michael Miller of <a target="_blank" href="http://facebook.com/Berks-Community-Murals-303283199762632">Berks Community Murals</a> in collaboration with Kayla Mattes and Justin Seibert of <a target="_blank" href="http://besttest.studio">BESTTEST</a>.</p>
       <p>The project is generously funded by West Reading Elm Street, a program of the West Reading Community Revitalization Foundation (<a target="_blank" href="http://wrcrf.org'">WRCRF</a>), along with the Wyomissing Area Education Foundation (<a target="_blank" href="wyoarea-foundation.org">WAEF</a>) and Wyomissing Area School District.</p>
       <p>WRMOTA's innaugural collection has been a community effort, relying on the hard work and cooperation of the following participants:</p>
@@ -22,9 +22,9 @@
         :caption="dean.caption"
       ></img-caption>
       <p>Finally, this project owes an immeasurable debt of gratitude to the vision and dedication of <a target="_blank" href="https://www.readingeagle.com/news/article/dean-rohrbach-west-reading-elm-street-program-manager-dies">Dean Rohrbach</a>, who launched countless projects like this one and whose presence will be greatly missed by the community he helped create.</p>
-      <nuxt-link to="/collection/2018/MikeMiller"><img class="grid" src="/img/2018/gum-parker-brick.jpg"></nuxt-link>
+      <nuxt-link to="/collection/2018/MikeMiller"><img class="grid -break-light" src="/img/2018/gum-parker-brick.jpg"></nuxt-link>
     </div>
-  </div>
+  </section>
 </template>
 
 <script>
