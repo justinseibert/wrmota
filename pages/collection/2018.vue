@@ -5,7 +5,7 @@
       :title="title"
       :subtitle="subtitle"
       :tabs="details"
-      :initialTab="'artists'"
+      :initialTab="'about'"
     ></exhibit-details>
     <exhibit-content
       class="content-container grid"
@@ -19,9 +19,9 @@
   import ExhibitDetails from '~/components/exhibit/details';
   import ExhibitContent from '~/components/exhibit/content';
 
-  import About from '~/components/about/2018';
+  import About from '~/pages/about/2018';
   import Artists from '~/components/exhibit/artists';
-  import Credits from '~/components/credits/2018';
+  import Credits from '~/pages/credits/2018';
 
   import Images from '~/components/exhibit/images';
   import LeafletMap from '~/components/map/leaflet';

@@ -86,4 +86,40 @@
 .component__about,
 .component__credits {
   background: color(body);
+
+  ul {
+    margin: 0;
+    padding: 0 space(light);
+    list-style: none;
+  }
+  li {
+    display: block;
+    position: relative;
+    padding: 0 0 space(light,2) 1.5em;
+    &:before {
+      content: '';
+      display: flex;
+      position: absolute;
+      top: 0.25em;
+      left: 0;
+      width: 0.25em;
+      height: 0.25em;
+      border: 0.25em solid color(orange);
+      border-radius: 50%;
+    }
+  }
+}
+
+.component__image-caption {
+  figure {
+    @extend .-column;
+  }
+  img {
+    width: 100%;
+  }
+  figcaption {
+    @extend small;
+    background: color(container);
+    padding: space(light);
+  }
 }
