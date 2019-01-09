@@ -13,13 +13,13 @@
     <nav-tabs
       class="exhibit-nav nav-nostalgia-invert"
       :tabs="tabs"
-      :active="active"
+      :active="activeTab"
     ></nav-tabs>
 
     <section ref="_exhibit_details" class="exhibit-details fill-column">
       <keep-alive>
         <component
-          :is="tabs[active]"
+          :is="tabs[activeTab]"
           :isMobile="isMobile"
         ></component>
       </keep-alive>
@@ -61,6 +61,17 @@
       isMobile: {
         type: Boolean,
         default: false
+      }
+    },
+
+    computed: {
+      activeTab: {
+        get() {
+          return this.active;
+        },
+        set(val){
+          this.active = val;
+        }
       }
     },
 

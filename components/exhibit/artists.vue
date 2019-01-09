@@ -11,7 +11,7 @@
         >
           <div
             class="artist-info"
-            v-on:click.stop="toggleArtist(index)"
+            v-on:click.stop="updateIndex(index)"
           >
             <h3>{{ artist.name }}</h3>
             <h4>{{ artist.location }}</h4>
@@ -81,11 +81,8 @@
 
     watch: {
       index() {
-        if (this.index > -1 && !this.artists[this.index].visible){
-          let tmp = JSON.parse(JSON.stringify(this.artists));
-          tmp[this.index].visible = true;
-          this.artists = Object.assign({}, tmp);
-        }
+        console.log('artists: index change');
+        this.toggleArtist();
 
         if (this.componentActive){
           this.$nextTick(() => {
@@ -110,6 +107,7 @@
 
     mounted() {
       // console.log('artists: mounted');
+      this.toggleArtist();
       this.scrollbar = this.$overlayScrollbars('#_scroll_artist_list');
     },
 
@@ -127,7 +125,15 @@
 
     methods: {
 
-      toggleArtist(index){
+      toggleArtist(){
+        if (this.index > -1 && !this.artists[this.index].visible){
+          let tmp = JSON.parse(JSON.stringify(this.artists));
+          tmp[this.index].visible = true;
+          this.artists = Object.assign({}, tmp);
+        }
+      },
+
+      updateIndex(index){
         this.$store.commit('index', index);
       },
 

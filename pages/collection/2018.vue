@@ -5,14 +5,14 @@
       :title="title"
       :subtitle="subtitle"
       :tabs="details"
-      :initialTab="'about'"
+      :initialTab="initialDetail"
       :isMobile="isMobile"
     ></exhibit-details>
     <exhibit-content
       v-if="!isMobile"
       class="content-container grid"
       :tabs="content"
-      :initialTab="'images'"
+      :initialTab="initialContent"
     ></exhibit-content>
   </div>
 </template>
@@ -65,24 +65,30 @@
           artists: Artists,
           credits: Credits,
         },
+        initialDetail: 'about',
         title: 'WRMOTA',
         subtitle: 'Summer, Fall 2018',
         content: {
           images: Images,
           map: LeafletMap,
         },
+        initialContent: 'map',
         previous: -1,
         isMobile: true,
       }
     },
 
-    mounted() {
+    created() {
       if (this.index > -1){
         this.updateRoute();
       } else if (typeof this.route != 'undefined' && this.route.length > 0){
+        this.initialDetail = 'artists',
+        this.initialContent = 'images',
         this.updateIndex();
       }
+    },
 
+    mounted() {
       window.addEventListener('resize', debounce(this.handleResize.bind(this), 100));
       this.handleResize();
     },
@@ -108,7 +114,6 @@
       },
 
       handleResize: function(e){
-        console.log('2018: handleResize');
         this.isMobile = window.innerWidth >= 600 ? false : true;
       }
     }

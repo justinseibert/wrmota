@@ -23,9 +23,7 @@
 
     watch: {
       index() {
-        if (this.componentActive && this.index > -1){
-          this.findArtist();
-        }
+        this.findArtist();
       }
     },
 
@@ -72,6 +70,7 @@
     mounted() {
       this.createMap(this.$refs._map);
       this.createArtistPoints();
+      this.findArtist();
     },
 
     created() {
@@ -205,13 +204,15 @@
       },
 
       findArtist: function(animate=true){
-        let addresses = this.artists[this.index].addresses;
-        let code = addresses.map(address => address.code);
+        if (this.componentActive && this.index > -1){
+          let addresses = this.artists[this.index].addresses;
+          let code = addresses.map(address => address.code);
 
-        if (code.length == 1){
-          this.selectSingleCode(code[0], animate);
-        } else {
-          this.selectMultipleCodes(code, animate);
+          if (code.length == 1){
+            this.selectSingleCode(code[0], animate);
+          } else {
+            this.selectMultipleCodes(code, animate);
+          }
         }
       },
 
