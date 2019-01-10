@@ -11,9 +11,16 @@
     &.player-button {
       color: color(body);
       background-color: $color;
+      cursor: pointer;
+      &:hover {
+        background-color: lighten($color, 5);
+      }
     }
     & a {
       color: $color;
+      &:hover {
+        color: lighten($color, 5);
+      }
     }
     svg {
       fill: color(body);

@@ -10,7 +10,7 @@
 
 .exhibit-header {
   text-align: center;
-  padding: space(light);
+  padding: space(light) space(menu-button, 1.1);
   background: darken(color(nostalgia), 5);
   color: color(body);
   h1,
@@ -39,19 +39,7 @@
     background: color(body);
     padding: 0 space(medium);
     cursor: pointer;
-    &:after {
-      content: '';
-      display: block;
-      height: 2px;
-      background: color(blue);
-      width: 100%;
-      margin: 0 auto;
-      transform: scale3d(0,1,1);
-      transition: transform 400ms;
-    }
-    &.selected:after {
-      transform: scale3d(1,1,1);
-    }
+    @include -underline(color(blue));
     &:first-child {
       padding-top: space(minimal,2);
     }

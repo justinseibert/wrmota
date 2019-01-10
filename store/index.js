@@ -3,6 +3,9 @@ export const state = () => ({
   data: null,
   index: -1,
 
+  menuVisible: false,
+  menuTransition: false,
+
 })
 
 export const actions = {
@@ -28,6 +31,14 @@ export const mutations = {
 
   setServerData(state, data) {
     state.data = data;
+  },
+
+  menu (state, value) {
+    state.menuVisible = value;
+  },
+
+  menuTransition (state, value) {
+    state.menuTransition = value;
   }
 
 }

@@ -1,3 +1,11 @@
+$wrmota_space: (
+  menu-button: 3em,
+);
+
+$space_map: map-merge(
+  $space_map, $wrmota_space
+);
+
 $wrmota_breakpoint: (
   exhibit-details: 600px,
   maximum: 1440px,
@@ -62,3 +70,23 @@ $wrmota_fonts: (
 );
 
 $fonts: map-merge($fonts, $wrmota_fonts);
+
+@mixin -underline-visible(){
+  transform: scale3d(1,1,1);
+}
+
+@mixin -underline($color){
+  &:after {
+    content: '';
+    display: block;
+    height: 2px;
+    background: $color;
+    width: 100%;
+    margin: 0 auto;
+    transform: scale3d(0,1,1);
+    transition: transform 400ms;
+  }
+  &.selected:after {
+    @include -underline-visible();
+  }
+}
