@@ -1,0 +1,161 @@
+@media (min-width: screen(tablet)){
+
+  .logo-title-container {
+    display: block;
+    position: absolute;
+    overflow: hidden;
+    width: 100%;
+    margin: 0;
+    svg {
+      position: absolute;
+    }
+
+    p {
+      font-size: 130%;
+      position: absolute;
+      text-align: left;
+    }
+  }
+
+
+}
+
+@media (min-width: screen(tablet)) and (orientation: landscape){
+
+  .logo-title-w {
+    width: 35%;
+    top: 18%;
+    left: 4%;
+  }
+
+  .logo-title-r {
+    width: 55%;
+    top: 34%;
+    left: 9%;
+  }
+
+  .logo-title-m {
+    width: 55%;
+    top: 15%;
+    left: 40.25%;
+  }
+
+  .logo-title-o {
+    width: 10%;
+    top: 34%;
+    left: 65%;
+    transform: rotate(90deg);
+  }
+
+  .logo-title-t {
+    width: 29%;
+    top: 46%;
+    left: 65%;
+  }
+
+  .logo-title-a {
+    width: 34%;
+    top: 54%;
+    left: 46%;
+  }
+
+  .home-description {
+    width: 38%;
+    top: 61%;
+    left: 5%;
+  }
+
+}
+
+@media (min-width: screen(tablet)) and (orientation: portrait){
+
+  .logo-title-w {
+    width: 43%;
+    top: 4%;
+    left: 56%;
+  }
+
+  .logo-title-r {
+    width: 81%;
+    top: 15%;
+    left: -1%;
+  }
+
+  .logo-title-m {
+    width: 77%;
+    top: 33%;
+    left: 22%;
+  }
+
+  .logo-title-o {
+    width: 12%;
+    top: 45%;
+    left: 12%;
+  }
+
+  .logo-title-t {
+    width: 76%;
+    top: 53%;
+    left: 3%;
+  }
+
+  .logo-title-a {
+    width: 50%;
+    top: 65%;
+    left: 52%;
+  }
+
+  .home-description {
+    width: 40%;
+    top: 72%;
+    left: 5%;
+  }
+
+}
+
+
+@media (min-width: screen(maximum, 300)) and (orientation: landscape){
+
+  .logo-title-w {
+    width: 28%;
+    top: 16%;
+    left: 5%;
+  }
+
+  .logo-title-r {
+    width: 44%;
+    top: 34%;
+    left: 9%;
+  }
+
+  .logo-title-m {
+    width: 57%;
+    top: 6%;
+    left: 34%;
+  }
+
+  .logo-title-o {
+    width: 7%;
+    top: 35%;
+    left: 55%;
+  }
+
+  .logo-title-t {
+    width: 28%;
+    top: 47%;
+    left: 54%;
+  }
+
+  .logo-title-a {
+    width: 28%;
+    top: 57%;
+    left: 50%;
+  }
+
+  .home-description {
+    width: 38%;
+    top: 69%;
+    left: 6%;
+  }
+
+}

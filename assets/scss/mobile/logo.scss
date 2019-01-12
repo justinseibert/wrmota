@@ -1,0 +1,54 @@
+.component__home {
+  overflow: hidden;
+}
+
+.logo-title-container {
+  @extend .-full-container;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 104%;
+  margin: 0 -2%;
+  svg {
+    margin: 0 auto;
+    transition: all 400ms;
+  }
+  p {
+    font-size: 110%;
+    text-align: center;
+    padding: space(light);
+    margin: 0;
+  }
+}
+
+.logo-title-w {
+  width: 50%;
+  padding-bottom: space(light);
+  fill: color(blue);
+}
+
+.logo-title-r {
+  width: 80%;
+  fill: color(blue);
+}
+
+.logo-title-m {
+  width: 100%;
+  fill: color(red);
+}
+
+.logo-title-o {
+  padding: space(light) 0 0;
+  width: 10%;
+  fill: color(orange);
+}
+
+.logo-title-t {
+  width: 100%;
+  fill: color(orange);
+}
+
+.logo-title-a {
+  width: 50%;
+  fill: color(green);
+}
