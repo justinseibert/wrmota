@@ -1,8 +1,7 @@
 <template>
   <main class="-full-container">
     <nav-menu
-      theme="blue"
-      page="home"
+      :theme="this.$route.path.indexOf('collection') > -1 ? 'nostalgia' : 'blue'"
     />
     <nuxt/>
   </main>
@@ -16,6 +15,6 @@
     components: {
       NavMenu
     }
-    
+
   }
 </script>

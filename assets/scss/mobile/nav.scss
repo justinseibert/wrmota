@@ -85,6 +85,31 @@
   }
 }
 
+.social-media-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  a {
+    display: block;
+    position: relative;
+    background: color(blue);
+    padding: space(minimal, 1.3);
+    margin: space(light);
+    border-radius: 50%;
+    width: space(menu-button, 0.6);
+    height: space(menu-button, 0.6);
+    &:hover {
+      background: lighten(color(blue), 5);
+    }
+    &:after {
+      display: none;
+    }
+    svg {
+      fill: color(body);
+    }
+  }
+}
+
 @mixin -wrmota-nav($color:nostalgia, $style:normal){
   $positive: color(body);
   $negative: $color;

@@ -12,7 +12,7 @@
       <section
         v-if="menuVisible"
         class="main-menu-container">
-        <nav class="main-menu">
+        <nav class="main-menu -column">
           <ul>
             <li
               v-for="(link, index) in links"
@@ -22,6 +22,10 @@
                 class="main-menu-item"
                 :style="{ transitionDelay: animationDelay(index) }"
                 v-on:click="goTo(link.url)">{{ link.page }}</span>
+            </li>
+            <li class="social-media-container">
+              <a href="https://www.facebook.com/wrmotaevent/" class="main-menu-item"><svg-facebook /></a>
+              <a href="https://www.instagram.com/wrmota_org/" class="main-menu-item"><svg-instagram /></a>
             </li>
           </ul>
         </nav>
@@ -34,11 +38,16 @@
   import SvgMenu from '~/components/svg/menu';
   import SvgClose from '~/components/svg/close';
 
+  import SvgFacebook from '~/components/svg/facebook';
+  import SvgInstagram from '~/components/svg/instagram';
+
   export default {
 
     components: {
       SvgMenu,
       SvgClose,
+      SvgFacebook,
+      SvgInstagram
     },
 
     props: {
@@ -68,8 +77,7 @@
         links: [
           { page: 'home', url: '/' },
           { page: 'collection', title: 'current collection', url: '/collection/2018' },
-          { page: 'contact', url: '/contact' },
-          { page: 'privacy', url: '/privacy' },
+          { page: 'donate', url: 'https://www.gofundme.com/wrmota'}
         ]
       }
     },
@@ -85,7 +93,9 @@
       },
 
       goTo: function(url) {
-        if (url != this.$route.path){
+        if (url.indexOf('http') > -1) {
+          window.location = url;
+        } else if (url != this.$route.path) {
           this.$router.push({ path: url });
         }
         this.toggleVisibility();
