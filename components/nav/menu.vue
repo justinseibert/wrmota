@@ -13,7 +13,7 @@
         v-if="menuVisible"
         class="main-menu-container">
         <nav class="main-menu -column">
-          <ul>
+          <ul class="fill-column">
             <li
               v-for="(link, index) in links"
               :class="itemClass(link.url)"
@@ -24,10 +24,13 @@
                 v-on:click="goTo(link.url)">{{ link.page }}</span>
             </li>
             <li class="social-media-container">
-              <a href="https://www.facebook.com/wrmotaevent/" class="main-menu-item"><svg-facebook /></a>
-              <a href="https://www.instagram.com/wrmota_org/" class="main-menu-item"><svg-instagram /></a>
+              <a href="https://www.facebook.com/wrmotaevent/" class="main-menu-item" target="_blank"><svg-facebook /></a>
+              <a href="https://www.instagram.com/wrmota_org/" class="main-menu-item" target="_blank"><svg-instagram /></a>
             </li>
           </ul>
+          <footer class="main-menu-footer row spaced -center">
+            <p>a <a href="https://www.facebook.com/Berks-Community-Murals-303283199762632/" target="_blank">Berks Community Murals</a> project in collaboration with <a href="https://besttest.studio" target="_blank">BESTTEST</a></p>
+          </footer>
         </nav>
       </section>
     </transition>

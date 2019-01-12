@@ -9,7 +9,8 @@
   justify-content: center;
   width: 104%;
   margin: 0 -2%;
-  svg {
+  svg,
+  .logo-title-o {
     margin: 0 auto;
     transition: all 400ms;
   }
@@ -40,7 +41,9 @@
 .logo-title-o {
   padding: space(light) 0 0;
   width: 10%;
-  fill: color(orange);
+  svg {
+    fill: color(orange);
+  }
 }
 
 .logo-title-t {
@@ -51,4 +54,22 @@
 .logo-title-a {
   width: 50%;
   fill: color(green);
+}
+
+.logo-enter-active {
+  transition: all 0 1000ms;
+}
+
+.logo-enter,
+.logo-leave-to {
+  svg {
+    transform: scale3d(0,0,0);
+  }
+}
+
+.logo-leave,
+.logo-enter-to {
+  svg {
+    transform: scale3d(1,1,1);
+  }
 }

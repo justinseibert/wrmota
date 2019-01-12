@@ -2,6 +2,7 @@ export const state = () => ({
 
   data: null,
   index: -1,
+  history: 0,
 
   menuVisible: false,
   menuTransition: false,
@@ -39,6 +40,10 @@ export const mutations = {
 
   menuTransition (state, value) {
     state.menuTransition = value;
+  },
+
+  historyIncrement (state) {
+    state.history += 1;
   }
 
 }

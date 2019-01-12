@@ -6,8 +6,13 @@
     overflow: hidden;
     width: 100%;
     margin: 0;
-    svg {
+    svg,
+    .logo-title-o {
       position: absolute;
+    }
+
+    .logo-title-o svg {
+      position: relative;
     }
 
     p {

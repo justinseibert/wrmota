@@ -53,7 +53,6 @@
       flex-direction: column;
       font-size: 150%;
       height: auto;
-      min-height: 100%;
       padding: space(light) 0;
       text-transform: capitalize;
     }
@@ -66,6 +65,7 @@
       }
     }
   }
+
   .main-menu-item {
     @extend a;
     transition-property: all;
@@ -82,6 +82,11 @@
     &:hover:after {
       @include -underline-visible();
     }
+  }
+
+  .main-menu-footer {
+    overflow: hidden;
+    text-align: center;
   }
 }
 
@@ -155,12 +160,19 @@ $wrmota_nav_map: (
     opacity: 1;
     transform: translateY(0) scale(1) rotate(0);
   }
+  .main-menu-footer p {
+    transition: all 400ms 300ms;
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 .menu-leave-active {
   &.main-menu-container {
     transition: display 800ms, transform 300ms 300ms;
   }
-
+  .main-menu-footer p {
+    transition: all 400ms 0;
+  }
 }
 
 .menu-enter-to,
@@ -178,5 +190,9 @@ $wrmota_nav_map: (
   .main-menu-item {
     opacity: 0;
     transform: translateY(100%) scale(0.8) rotate(20deg);
+  }
+  .main-menu-footer p {
+    opacity: 0;
+    transform: translateY(100%);
   }
 }
