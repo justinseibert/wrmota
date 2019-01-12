@@ -100,11 +100,12 @@
     methods: {
 
       updateRoute: function(){
-        if (this.previous != this.index){
+        if (this.previous > -1 && this.previous != this.index){
           this.$router.replace({
             params: { artist: this.artists[this.index].stripped_name }
           });
         }
+        this.initialDetail = 'artists';
         this.previous = this.index;
       },
 

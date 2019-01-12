@@ -64,6 +64,12 @@
       }
     },
 
+    watch: {
+      initialTab(){
+        this.active = this.initialTab;
+      }
+    },
+
     computed: {
       activeTab: {
         get() {

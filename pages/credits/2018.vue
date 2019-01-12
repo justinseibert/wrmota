@@ -21,7 +21,7 @@
         :src="dean.src"
         :caption="dean.caption"
       ></img-caption>
-      <p>Finally, this project owes an immeasurable debt of gratitude to the vision and dedication of <a target="_blank" href="https://www.readingeagle.com/news/article/dean-rohrbach-west-reading-elm-street-program-manager-dies">Dean Rohrbach</a>, who launched countless projects like this one and whose presence will be greatly missed by the community he helped create.</p>
+      <p>Finally, this project owes immeasurable gratitude to the vision and dedication of <a target="_blank" href="https://www.readingeagle.com/news/article/dean-rohrbach-west-reading-elm-street-program-manager-dies">Dean Rohrbach</a>, who launched countless projects like this one and whose presence will be greatly missed by the community he helped create.</p>
       <nuxt-link to="/collection/2018/MikeMiller"><img class="grid -break-light" src="/img/2018/gum-parker-brick.jpg"></nuxt-link>
     </div>
   </section>
