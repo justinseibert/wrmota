@@ -8,9 +8,7 @@
       <svg-menu v-if="!menuVisible"/>
       <svg-close v-if="menuVisible"/>
     </div>
-    <transition
-      name="menu"
-    >
+    <transition name="menu">
       <section
         v-if="menuVisible"
         class="main-menu-container">
@@ -18,12 +16,12 @@
           <ul>
             <li
               v-for="(link, index) in links"
-              v-if="menuVisible"
-              :class="page == link.title ? 'selected' : ''"
+              :class="itemClass(link.url)"
             >
-              <a href="#"
-                :style="{ animationDelay: animationDelay(index) }"
-                v-on:click="goTo(link.page)">{{ link.title }}</a>
+              <span
+                class="main-menu-item"
+                :style="{ transitionDelay: animationDelay(index) }"
+                v-on:click="goTo(link.url)">{{ link.page }}</span>
             </li>
           </ul>
         </nav>
@@ -47,11 +45,7 @@
       theme: {
         type: String,
         default: 'blue'
-      },
-      page: {
-        type: String,
-        default: ''
-      },
+      }
     },
 
     computed: {
@@ -64,23 +58,19 @@
       menuTransition() {
         return this.$store.state.menuTransition;
       },
+      url() {
+        return this.$route.path;
+      }
     },
 
     data() {
       return {
         links: [
-          { title: 'home', page: '/' },
-          { title: 'collection', page: '/collection/2018' },
-          { title: 'contact', page: '/contact' },
-          { title: 'privacy', page: '/privacy' },
-        ],
-      }
-    },
-
-    mounted() {
-      if (this.menuTransition){
-        this.$store.commit('menuTransition', false);
-        this.toggleVisibility();
+          { page: 'home', url: '/' },
+          { page: 'collection', title: 'current collection', url: '/collection/2018' },
+          { page: 'contact', url: '/contact' },
+          { page: 'privacy', url: '/privacy' },
+        ]
       }
     },
 
@@ -90,12 +80,23 @@
       },
 
       animationDelay: function(index){
-        return `${ ((this.links.length - index) * 50) + 300 }ms`;
+        let reverseOrder = (this.links.length-1) - index;
+        return `${ reverseOrder * 80 }ms`;
       },
 
-      goTo(url) {
-        this.$store.commit('menuTransition', true);
-        this.$router.push(url);
+      goTo: function(url) {
+        if (url != this.$route.path){
+          this.$router.push({ path: url });
+        }
+        this.toggleVisibility();
+      },
+
+      itemClass: function(url){
+        if (url == '/' && this.url == '/'){
+          return 'selected';
+        } else if (url != '/' && this.url.indexOf(url) > -1){
+          return 'selected';
+        }
       }
     }
 

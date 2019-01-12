@@ -1,9 +1,5 @@
 <template>
   <div class="-full-container">
-    <nav-menu
-      theme="nostalgia"
-      page="collection"
-    />
     <exhibit-details
       class="exhibit-container grid"
       :title="title"
@@ -22,8 +18,6 @@
 </template>
 
 <script>
-  import NavMenu from '~/components/nav/menu';
-
   import ExhibitDetails from '~/components/exhibit/details';
   import ExhibitContent from '~/components/exhibit/content';
 
@@ -39,7 +33,6 @@
   export default {
 
     components: {
-      NavMenu,
       ExhibitDetails,
       ExhibitContent,
     },
@@ -108,7 +101,7 @@
 
       updateRoute: function(){
         if (this.previous != this.index){
-          this.$router.push({
+          this.$router.replace({
             params: { artist: this.artists[this.index].stripped_name }
           });
         }
