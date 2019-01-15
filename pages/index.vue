@@ -25,6 +25,7 @@
 
   export default {
 
+
     components: {
       SvgW,
       SvgR,
@@ -34,9 +35,27 @@
       SvgA
     },
 
+    computed: {
+      metaImages() {
+        return this.$store.getters.randomImages;
+      },
+    },
+
     data(){
       return {
         active: false,
+      }
+    },
+
+    head() {
+      return {
+        meta: [
+          { property: 'og:title', content: 'West Reading Museum of Temporary Art' },
+          { property: 'og:image', content: this.metaImages[0] },
+          { property: 'og:image', content: this.metaImages[1] },
+          { property: 'og:image', content: this.metaImages[2] },
+          { property: 'og:url', content: `https://wrmota.org${this.$route.path}` },
+        ],
       }
     },
 
@@ -51,7 +70,7 @@
     },
 
     destroyed() {
-      console.log('destroyed');
+      // console.log('destroyed');
       this.active = false;
     },
 

@@ -153,5 +153,22 @@ export const getters = {
     });
 
     return list;
-  }
+  },
+
+  randomImages: (state, getters) => {
+    let original = getters.filtered;
+    let randomImages = [];
+
+    let i = 0;
+    while(i < 5){
+      let random = Math.round(Math.random() * (original.length-1));
+      randomImages.push(original[random].image.large[0]);
+
+      i++;
+    }
+
+    return randomImages;
+  },
+
+
 }

@@ -47,6 +47,9 @@
       route() {
         return this.$route.params.artist;
       },
+      metaImages() {
+        return this.$store.getters.randomImages;
+      },
     },
 
     watch: {
@@ -56,6 +59,28 @@
       route() {
         this.updateIndex();
       },
+    },
+
+    head() {
+      let images = this.metaImages;
+      let description = 'Explore the stories and artwork of WRMOTA 2018.';
+
+      if (this.index > -1){
+        let artist = this.artists[this.index];
+        images = artist.addresses[0].image.large;
+        description = `${description.slice(0,-1)} featuring work by ${artist.visitor} artist ${artist.name} of ${artist.location}`;
+      }
+
+      return {
+        meta: [
+          { property: 'og:title', content: 'West Reading Museum of Temporary Art' },
+          { property: 'og:description', content: description },
+          { property: 'og:image', content: images[0] },
+          { property: 'og:image', content: images[1] },
+          { property: 'og:image', content: images[2] },
+          { property: 'og:url', content: `https://wrmota.org${this.$route.path}` },
+        ],
+      }
     },
 
     data(){
