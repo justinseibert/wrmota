@@ -81,7 +81,7 @@
 
     watch: {
       index() {
-        console.log('artists: index change');
+        // console.log('artists: index change');
         this.toggleArtist();
 
         if (this.componentActive){

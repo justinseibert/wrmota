@@ -78,7 +78,7 @@
     methods: {
 
       toggleAudio: function() {
-        console.log('fn: toggleState');
+        // console.log('fn: toggleState');
         switch (this.audio.state){
           case 'playing':
             this.audio.state = 'paused';
@@ -99,7 +99,7 @@
       },
 
       loadAudio: function(autoplay){
-        console.log('fn: loadAudio');
+        // console.log('fn: loadAudio');
         var id = this.player.audio_file;
         if (!this.audio[id]){
           this.audio.files[id] = new Howl({

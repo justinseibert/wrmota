@@ -3,11 +3,10 @@
     ref="_map"
     class="map"
     style="height:100%"
-  ></div>
+  />
 </template>
 
 <script>
-  import L from 'leaflet';
   import debounce from 'lodash.debounce';
 
   export default {
@@ -94,7 +93,7 @@
           this.map.invalidateSize();
           this.findArtist(false);
         } catch(e) {
-          console.log('can not find artist?');
+          // console.log('can not find artist?');
         }
       }
 
