@@ -58,6 +58,7 @@ module.exports = {
   modules: [
     // Doc: https://github.com/nuxt-community/axios-module#usage
     '@nuxtjs/axios',
+    '@nuxtjs/google-analytics'
     // 'nuxt-spa-store-init'
   ],
   /*
@@ -65,6 +66,10 @@ module.exports = {
   */
   axios: {
     // See https://github.com/nuxt-community/axios-module#options
+  },
+
+  'google-analytics': {
+    id: 'UA-112761452-1'
   },
 
   /*
