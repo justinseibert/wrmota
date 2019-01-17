@@ -1,7 +1,7 @@
 import Vue from 'vue';
 
 import 'overlayscrollbars/css/OverlayScrollbars.min.css';
-import OverlayScrollbars from 'OverlayScrollbars';
+import OverlayScrollbars from 'overlayscrollbars';
 
 Vue.prototype.$overlayScrollbars = (elem, config) => {
   elem = typeof elem === 'undefined' ? '._scrollable' : elem;
