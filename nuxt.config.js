@@ -4,7 +4,7 @@ const path = require('path')
 require('dotenv').config({ path: path.join(__dirname, '.env') })
 
 module.exports = {
-  mode: 'universal',
+  target: 'static',
 
   /*
   ** Headers of the page
