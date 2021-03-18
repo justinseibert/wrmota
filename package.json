@@ -7,8 +7,9 @@
   "scripts": {
     "dev": "NODE_ENV=development cross-env NUXT_PORT=3000 nuxt",
     "build": "nuxt build",
-    "start": "nuxt start",
-    "generate": "nuxt generate"
+    "start": "nuxt start --port 3001",
+    "generate": "nuxt generate",
+    "serve": "npm run build && npm run start"
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.0.0",
